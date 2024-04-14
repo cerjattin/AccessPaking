@@ -32,6 +32,7 @@ dependencies:
   permission_handler: 
   intl: 
   shared_preferences: 
+  flutter_svg:   
 
 
 dev_dependencies:

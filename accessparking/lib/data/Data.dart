@@ -1,4 +1,5 @@
-import '/models/Autoriza.dart';
+// ignore: file_names
+import '../models/Autoriza.dart';
 import '/models/CxCadmin.dart';
 import '/models/Guest.dart';
 import '/models/User.dart';
