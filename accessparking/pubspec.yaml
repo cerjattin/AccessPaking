@@ -33,7 +33,7 @@ dependencies:
   intl: 
   shared_preferences: 
   flutter_svg: 
-  get:  
+  getx:  
 
 
 dev_dependencies:
