@@ -90,11 +90,13 @@ class _SessionState extends State<Session> {
                           controller: _passwordController,
                           decoration: InputDecoration(
                               labelText: 'Contraseña',
+                              hintText: 'Contraseña',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               filled: true,
                               fillColor: Colors.white),
+                               obscureText: true,
                         ),
                       ),
                       Container(
