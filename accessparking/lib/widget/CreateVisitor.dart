@@ -60,171 +60,181 @@ class _VisitorState extends State<Visitor> {
             )),
         drawer: const CustomerDrawer(),
         body: SafeArea(
-          child: Stack(children: <Widget>[
-            Column(
-              children: <Widget>[
-                Column(children: <Widget>[
-                  //Primer bloque
-                  Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffdcdbdb),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      margin: const EdgeInsets.all(20.0),
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            Row(children: <Widget>[
-                              SizedBox(
-                                width: 230,
-                                child: TextField(
+          child: Center(
+              child: SingleChildScrollView(
+            child: Container(
+              child: Stack(children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Column(children: <Widget>[
+                      //Primer bloque
+                      Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffdcdbdb),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          margin: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  SizedBox(
+                                    width: 230,
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Placa Principal',
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          enabled: false,
+                                          filled: true,
+                                          fillColor: Colors.white),
+                                    ),
+                                  ),
+                                ]),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
                                   decoration: InputDecoration(
-                                      labelText: 'Placa Principal',
+                                      labelText: 'Nombre del responsable',
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
-                                      enabled: false,
+                                      enabled: true,
                                       filled: true,
                                       fillColor: Colors.white),
                                 ),
-                              ),
-                            ]),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                  labelText: 'Nombre del responsable',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                              ])),
+                      //Segundo bloque
+                      Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xffdcdbdb),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          margin: EdgeInsets.all(20.0),
+                          padding: EdgeInsets.all(20.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                Row(children: <Widget>[
+                                  SizedBox(
+                                    width: 230,
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Placa Invitado',
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          enabled: false,
+                                          filled: true,
+                                          fillColor: Colors.white),
+                                    ),
                                   ),
-                                  enabled: true,
-                                  filled: true,
-                                  fillColor: Colors.white),
-                            ),
-                          ])),
-                  //Segundo bloque
-                  Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xffdcdbdb),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      margin: EdgeInsets.all(20.0),
-                      padding: EdgeInsets.all(20.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            Row(children: <Widget>[
-                              SizedBox(
-                                width: 230,
-                                child: TextField(
+                                ]),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
                                   decoration: InputDecoration(
-                                      labelText: 'Placa Invitado',
+                                      labelText: 'Nombre del visitante',
                                       border: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
                                       ),
-                                      enabled: false,
+                                      enabled: true,
                                       filled: true,
                                       fillColor: Colors.white),
                                 ),
-                              ),
-                            ]),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                  labelText: 'Nombre del visitante',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                TextField(
+                                  decoration: InputDecoration(
+                                      labelText: 'Documento de identidad',
+                                      border: OutlineInputBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      enabled: true,
+                                      filled: true,
+                                      fillColor: Colors.white),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text('Fecha de inicio'),
+                                TextFormField(
+                                  readOnly: true,
+                                  decoration: InputDecoration(
+                                      hintText: 'Fecha de Inicio',
+                                      suffixIcon: IconButton(
+                                        icon: const Icon(Icons.calendar_today,
+                                            color: Color(0xffdd45f5), size: 20),
+                                        onPressed: () =>
+                                            _selectStartDate(context),
+                                      )),
+                                  controller: TextEditingController(
+                                    text: DateFormat('yyyy-MM-dd')
+                                        .format(_startDate),
                                   ),
-                                  enabled: true,
-                                  filled: true,
-                                  fillColor: Colors.white),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                  labelText: 'Documento de identidad',
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                const Text('Fecha final'),
+                                TextFormField(
+                                  readOnly: true,
+                                  decoration: InputDecoration(
+                                      hintText: 'Fecha Final',
+                                      suffixIcon: IconButton(
+                                        icon: const Icon(Icons.calendar_today,
+                                            color: Color(0xffdd45f5), size: 20),
+                                        onPressed: () =>
+                                            _selectStartDate(context),
+                                      )),
+                                  controller: TextEditingController(
+                                    text: DateFormat('yyyy-MM-dd')
+                                        .format(_startDate),
                                   ),
-                                  enabled: true,
-                                  filled: true,
-                                  fillColor: Colors.white),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text('Fecha de inicio'),
-                            TextFormField(
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                  hintText: 'Fecha de Inicio',
-                                  suffixIcon: IconButton(
-                                    icon: const Icon(Icons.calendar_today,
-                                        color: Color(0xffdd45f5), size: 20),
-                                    onPressed: () => _selectStartDate(context),
-                                  )),
-                              controller: TextEditingController(
-                                text:
-                                    DateFormat('yyyy-MM-dd').format(_startDate),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text('Fecha final'),
-                            TextFormField(
-                              readOnly: true,
-                              decoration: InputDecoration(
-                                  hintText: 'Fecha Final',
-                                  suffixIcon: IconButton(
-                                    icon: const Icon(Icons.calendar_today,
-                                        color: Color(0xffdd45f5), size: 20),
-                                    onPressed: () => _selectStartDate(context),
-                                  )),
-                              controller: TextEditingController(
-                                text:
-                                    DateFormat('yyyy-MM-dd').format(_startDate),
-                              ),
-                            ),
-                          ])),
-                  ElevatedButton(
-                    child: const Text('Confirmar ingreso'),
-                    onPressed: () {},
-                  )
-                ]),
-              ],
+                                ),
+                              ])),
+                      ElevatedButton(
+                        child: const Text('Confirmar ingreso'),
+                        onPressed: () {},
+                      )
+                    ]),
+                  ],
+                ),
+                //Camara bloaque 1
+                Positioned(
+                    top: 45,
+                    right: 40,
+                    child: IconButton(
+                      icon: const Icon(Icons.camera_alt_outlined,
+                          color: Color(0xffdd45f5), size: 30.0),
+                      onPressed: () {
+                        // Agrega aquí la lógica para manejar el botón de la cámara
+                      },
+                    )),
+                //Camara bloaque 2
+                Positioned(
+                    top: 250,
+                    right: 40,
+                    child: IconButton(
+                      icon: const Icon(Icons.camera_alt_outlined,
+                          color: Color(0xffdd45f5), size: 30.0),
+                      onPressed: () {
+                        // Agrega aquí la lógica para manejar el botón de la cámara
+                      },
+                    )),
+              ]),
             ),
-            //Camara bloaque 1
-            Positioned(
-                top: 45,
-                right: 40,
-                child: IconButton(
-                  icon: const Icon(Icons.camera_alt_outlined,
-                      color: Color(0xffdd45f5), size: 30.0),
-                  onPressed: () {
-                    // Agrega aquí la lógica para manejar el botón de la cámara
-                  },
-                )),
-            //Camara bloaque 2
-            Positioned(
-                top: 250,
-                right: 40,
-                child: IconButton(
-                  icon: const Icon(Icons.camera_alt_outlined,
-                      color: Color(0xffdd45f5), size: 30.0),
-                  onPressed: () {
-                    // Agrega aquí la lógica para manejar el botón de la cámara
-                  },
-                )),
-          ]),
+          )),
         ),
         bottomNavigationBar: SizedBox(
           height: 60.0,
