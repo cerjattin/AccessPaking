@@ -53,148 +53,153 @@ class _RegisterState extends State<Register> {
           )),
       drawer: const CustomerDrawer(),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xffdcdbdb),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                margin: const EdgeInsets.all(20.0),
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      Row(children: <Widget>[
-                        SizedBox(
-                          width: 230,
-                          child: TextField(
+          child: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Stack(
+              children: [
+                Column(children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color(0xffdcdbdb),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    margin: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
+                          Row(children: <Widget>[
+                            SizedBox(
+                              width: 230,
+                              child: TextField(
+                                decoration: InputDecoration(
+                                    labelText: 'Placa',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    enabled: false,
+                                    filled: true,
+                                    fillColor: Colors.white),
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
                             decoration: InputDecoration(
-                                labelText: 'Placa',
+                                labelText: 'Documento de identidad',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                enabled: false,
+                                enabled: true,
                                 filled: true,
                                 fillColor: Colors.white),
                           ),
-                        ),
-                      ]),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'Documento de identidad',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabled: true,
-                            filled: true,
-                            fillColor: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'Nombre del responsable',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabled: true,
-                            filled: true,
-                            fillColor: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'Celular',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabled: true,
-                            filled: true,
-                            fillColor: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'Mail',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            enabled: true,
-                            filled: true,
-                            fillColor: Colors.white),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        width: 370,
-                        child: DropdownButton<String>(
-                          value: dropdownValue,
-                          icon: const Icon(Icons.arrow_downward),
-                          elevation: 16,
-                          style: const TextStyle(color: Colors.deepPurple),
-                          underline: Container(
-                            height: 2,
-                            color: Colors.deepPurpleAccent,
+                          const SizedBox(
+                            height: 10,
                           ),
-                          onChanged: (String? value) {
-                            // This is called when the user selects an item.
-                            setState(() {
-                              dropdownValue = value!;
-                            });
-                          },
-                          items: list
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(value),
-                            );
-                          }).toList(),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                            labelText: 'Apartamento',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                          TextField(
+                            decoration: InputDecoration(
+                                labelText: 'Nombre del responsable',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                enabled: true,
+                                filled: true,
+                                fillColor: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
+                            decoration: InputDecoration(
+                                labelText: 'Celular',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                enabled: true,
+                                filled: true,
+                                fillColor: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
+                            decoration: InputDecoration(
+                                labelText: 'Mail',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                enabled: true,
+                                filled: true,
+                                fillColor: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SizedBox(
+                            width: 370,
+                            child: DropdownButton<String>(
+                              value: dropdownValue,
+                              icon: const Icon(Icons.arrow_downward),
+                              elevation: 16,
+                              style: const TextStyle(color: Colors.deepPurple),
+                              underline: Container(
+                                height: 2,
+                                color: Colors.deepPurpleAccent,
+                              ),
+                              onChanged: (String? value) {
+                                // This is called when the user selects an item.
+                                setState(() {
+                                  dropdownValue = value!;
+                                });
+                              },
+                              items: list.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
-                            enabled: true,
-                            filled: true,
-                            fillColor: Colors.white),
-                      ),
-                    ]),
-              ),
-              ElevatedButton(
-                child: const Text('Confirmar ingreso'),
-                onPressed: () {},
-              )
-            ]),
-            Positioned(
-                top: 45,
-                right: 40,
-                child: IconButton(
-                  icon: const Icon(Icons.camera_alt_outlined,
-                      color: Color(0xffdd45f5), size: 30.0),
-                  onPressed: () {
-                    // Agrega aquí la lógica para manejar el botón de la cámara
-                  },
-                )),
-          ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          TextField(
+                            decoration: InputDecoration(
+                                labelText: 'Apartamento',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                enabled: true,
+                                filled: true,
+                                fillColor: Colors.white),
+                          ),
+                        ]),
+                  ),
+                  ElevatedButton(
+                    child: const Text('Confirmar ingreso'),
+                    onPressed: () {},
+                  )
+                ]),
+                Positioned(
+                    top: 45,
+                    right: 40,
+                    child: IconButton(
+                      icon: const Icon(Icons.camera_alt_outlined,
+                          color: Color(0xffdd45f5), size: 30.0),
+                      onPressed: () {
+                        // Agrega aquí la lógica para manejar el botón de la cámara
+                      },
+                    )),
+              ],
+            ),
+          ),
         ),
-      ),
+      )),
       bottomNavigationBar: SizedBox(
         height: 60.0,
         child: ClipRRect(
