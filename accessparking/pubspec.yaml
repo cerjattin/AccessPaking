@@ -26,13 +26,14 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons:
-  http: any
+  http: 
   google_mlkit_text_recognition:
   camera: 
   permission_handler: 
   intl: 
   shared_preferences: 
-  flutter_svg:   
+  flutter_svg: 
+  get:  
 
 
 dev_dependencies:

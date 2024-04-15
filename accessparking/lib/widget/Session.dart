@@ -1,3 +1,4 @@
+import 'package:accessparking/utils/responsive.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../Provider/Usuario_Provider.dart';
@@ -21,6 +22,7 @@ class _SessionState extends State<Session> {
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
@@ -30,102 +32,116 @@ class _SessionState extends State<Session> {
         body: Center(
           child: Container(
             margin: const EdgeInsets.all(32),
-            width: 350,
-            height: 650,
+            width: responsive.width * 0.85,
+            height: responsive.height * 0.9,
             decoration: BoxDecoration(
               color: const Color(0x95313131),
               borderRadius: BorderRadius.circular(20),
             ),
             child: SafeArea(
                 child: Center(
-              child: Column(
-                children: [
-                  Container(
-                    //logo
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 10),
-                    height: 270,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/logo.png'))),
-                  ),
-                  Container(
-                    //correo
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 50,
-                    ),
-                    height: 50,
-                    color: Colors.transparent,
-                    child: TextField(
-                      controller: _emailController,
-                      decoration: InputDecoration(
-                          labelText: 'Correo electrónico',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        //logo
+                        padding: EdgeInsets.all(5.0),
+                        /*child: const CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: AssetImage(
+                            'assets/logo.png',
                           ),
-                          filled: true,
-                          fillColor: Colors.white),
-                    ),
-                  ),
-                  Container(
-                    //contraseña
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 20),
-                    height: 50,
-                    color: Colors.transparent,
-                    child: TextField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                          labelText: 'Contraseña',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          filled: true,
-                          fillColor: Colors.white),
-                    ),
-                  ),
-                  Container(
-                    //Check box
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 50,
-                    ),
-                    child: CheckboxListTile(
-                      fillColor: MaterialStateProperty.resolveWith((states) {
-                        if (!states.contains(MaterialState.selected)) {
-                          return Colors.white;
-                        }
-                        return null;
-                      }),
-                      title: const Text('Acepto terminos y condiciones',
-                          style: TextStyle(color: Colors.white)),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: _acceptTerms,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _acceptTerms = value ?? false;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    //boton de inico
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 20),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (_acceptTerms == true) {
-                          _login(context);
-                        }
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
+                          radius: 110.0,
+                        ),*/
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 10),
+                        height: responsive.height * 0.2,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/logo.png'))),
                       ),
-                      child: const Text('Confirmar ingreso',
-                          style: TextStyle(color: Colors.black)),
-                    ),
-                  )
-                ],
+                      SizedBox(height: responsive.height * 0.2),
+                      Container(
+                        //correo
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 50,
+                        ),
+                        height: 50,
+                        color: Colors.transparent,
+                        child: TextField(
+                          controller: _emailController,
+                          decoration: InputDecoration(
+                              labelText: 'Correo electrónico',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white),
+                        ),
+                      ),
+                      Container(
+                        //contraseña
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 20),
+                        height: 50,
+                        color: Colors.transparent,
+                        child: TextField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                              labelText: 'Contraseña',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white),
+                        ),
+                      ),
+                      Container(
+                        //Check box
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 50,
+                        ),
+                        child: CheckboxListTile(
+                          fillColor:
+                              MaterialStateProperty.resolveWith((states) {
+                            if (!states.contains(MaterialState.selected)) {
+                              return Colors.white;
+                            }
+                            return null;
+                          }),
+                          title: const Text('Acepto terminos y condiciones',
+                              style: TextStyle(color: Colors.white)),
+                          controlAffinity: ListTileControlAffinity.leading,
+                          value: _acceptTerms,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _acceptTerms = value ?? false;
+                            });
+                          },
+                        ),
+                      ),
+                      Container(
+                        //boton de inico
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 50, vertical: 20),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_acceptTerms == true) {
+                              _login(context);
+                            }
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                          ),
+                          child: const Text('Confirmar ingreso',
+                              style: TextStyle(color: Colors.black)),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ),
             )),
           ),
@@ -145,6 +161,10 @@ class _SessionState extends State<Session> {
         print("Usuarios obtenidos: $usuarios");
       }
       for (Usuario u in usuarios) {
+        print(u.mail);
+        print(user);
+        print(u.pass);
+        print(password);
         if (u.mail == user && u.pass == password) {
           _saveUserData(u);
           isloged = true;

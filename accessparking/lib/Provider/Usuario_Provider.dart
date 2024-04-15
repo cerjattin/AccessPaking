@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:accessparking/models/Usuario.dart';
 import 'package:http/http.dart' as http;
-import '../models/Usuario.dart';
 
 class UsuarioProvider {
-  final String _endpoint = "https://dbpark-767b1-default-rtdb.firebaseio.com";
+  final String _endpoint = "https://dbapark-ad140-default-rtdb.firebaseio.com";
 
   Future<bool> crearusuario(Usuario user) async {
     try {
@@ -29,12 +29,12 @@ class UsuarioProvider {
 
   Future<List<Usuario>> getUser() async {
     try {
-      final url = '$_endpoint/parking/user/iduser.json';
+      final url = '$_endpoint/parking/user.json';
       final resp = await http.get(Uri.parse(url));
-
+      print("esta es la resp: $resp");
       if (resp.statusCode == 200) {
         final jsonData = jsonDecode(resp.body);
-
+        print("estos son los datos: $jsonData");
         if (jsonData != null && jsonData is Map<String, dynamic>) {
           List<Usuario> usuarios = [];
 
