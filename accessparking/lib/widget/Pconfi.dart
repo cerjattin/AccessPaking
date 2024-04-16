@@ -1,3 +1,4 @@
+// ignore_for_file: file_names
 import 'package:flutter/material.dart';
 import 'CustomerDrawer.dart';
 import '/models/Autoriza.dart';
@@ -56,11 +57,11 @@ class _PconfiState extends State<Pconfi> {
                   children: <Widget>[
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xffdcdbdb),
+                        color: const Color(0xffdcdbdb),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      margin: EdgeInsets.all(20.0),
-                      padding: EdgeInsets.all(20.0),
+                      margin: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
                           Row(
@@ -112,7 +113,7 @@ class _PconfiState extends State<Pconfi> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Color(0xffdcdbdb),
+                        color: const Color(0xffdcdbdb),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       margin: const EdgeInsets.all(20.0),
@@ -126,7 +127,7 @@ class _PconfiState extends State<Pconfi> {
                                 itemCount: autorizaList.length,
                                 itemBuilder: (context, index) {
                                   return Card(
-                                      color: Color(0xffdd45f5),
+                                      color: const Color(0xffdd45f5),
                                       child: ListTile(
                                         title: Text(
                                             'ID: ${autorizaList[index].guest[0].idV}'),
@@ -169,7 +170,7 @@ class _PconfiState extends State<Pconfi> {
                   20.0), // Redondea los bordes superiores derechos
             ),
             child: BottomAppBar(
-              color: Color(0xffdd45f5),
+              color: const Color(0xffdd45f5),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[

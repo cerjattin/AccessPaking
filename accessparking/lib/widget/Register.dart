@@ -1,4 +1,7 @@
+import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'CustomerDrawer.dart';
 
 const List<String> list = <String>[
@@ -19,8 +22,41 @@ class Register extends StatefulWidget {
   State<Register> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register> {
+class _RegisterState extends State<Register> with WidgetsBindingObserver {
   bool estado = false;
+  bool _isGranted = false;
+  late final Future<void> _future;
+  CameraController? _cameraController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _future = _requestCamera();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    WidgetsBinding.instance.removeObserver(this);
+    stopCamera();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_cameraController == null || !_cameraController!.value.isInitialized) {
+      return;
+    }
+    if (state== AppLifecycleState.inactive){
+      stopCamera()
+    }else if(state == AppLifecycleState.resumed && 
+          _cameraController!= null && 
+          _cameraController!.value.isInitialized){
+            startCamera();
+          }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,5 +266,54 @@ class _RegisterState extends State<Register> {
             )),
       ),
     );
+  }
+
+  Future<void> _requestCamera() async {
+    final status = await Permission.camera.request();
+    //_isPermissionGranted = status == PermissionStatus.granted;
+    _isGranted = status == PermissionStatus.granted;
+  }
+
+  void startCamera() {
+    if (_cameraController != null) {
+      _selectedCamera(_cameraController!.description);
+    }
+  }
+
+  void stopCamera() {
+    if (_cameraController != null) {
+      _cameraController!.dispose();
+    }
+  }
+
+  void _initCameraController(List<CameraDescription> cameras) {
+    if (_cameraController != null) {
+      return;
+    }
+    CameraDescription? camera;
+
+    for (var i = 0; 1 < cameras.length; i++) {
+      final CameraDescription current = cameras[i];
+      if (current.lensDirection == CameraLensDirection.back) {
+        camera = current;
+        break;
+      }
+    }
+    if (camera != null) {
+      _selectedCamera(camera);
+    } else {
+      if (kDebugMode) {
+        print("No back camera available.");
+      }
+    }
+  }
+
+  Future<void> _selectedCamera(CameraDescription camera) async {
+    _cameraController =
+        CameraController(camera, ResolutionPreset.max, enableAudio: false);
+    await _cameraController!.initialize();
+    if (!mounted) {
+      return;
+    }
   }
 }
