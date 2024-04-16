@@ -1,4 +1,6 @@
 // ignore_for_file: file_names
+import 'package:accessparking/utils/responsive.dart';
+import 'package:accessparking/widget/HomeUser.dart';
 import 'package:flutter/material.dart';
 import 'CustomerDrawer.dart';
 import '/models/Autoriza.dart';
@@ -18,6 +20,7 @@ class _PconfiState extends State<Pconfi> {
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(
@@ -35,7 +38,7 @@ class _PconfiState extends State<Pconfi> {
             ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(
-                color: Color(0xffdd45f5), // Cambia el color de fondo del AppBar
+                color: Colors.green,
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(
                       20.0), // Redondea el borde inferior izquierdo
@@ -127,7 +130,7 @@ class _PconfiState extends State<Pconfi> {
                                 itemCount: autorizaList.length,
                                 itemBuilder: (context, index) {
                                   return Card(
-                                      color: const Color(0xffdd45f5),
+                                      color: Colors.green,
                                       child: ListTile(
                                         title: Text(
                                             'ID: ${autorizaList[index].guest[0].idV}'),
@@ -150,7 +153,7 @@ class _PconfiState extends State<Pconfi> {
                     right: 40,
                     child: IconButton(
                       icon: const Icon(Icons.camera_alt_outlined,
-                          color: Color(0xffdd45f5), size: 30.0),
+                          color: Colors.green, size: 30.0),
                       onPressed: () {
                         // Agrega aquí la lógica para manejar el botón de la cámara
                       },
@@ -161,7 +164,7 @@ class _PconfiState extends State<Pconfi> {
         ),
       )),
       bottomNavigationBar: SizedBox(
-        height: 60.0,
+        height: responsive.height * 0.09,
         child: ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(
@@ -170,16 +173,19 @@ class _PconfiState extends State<Pconfi> {
                   20.0), // Redondea los bordes superiores derechos
             ),
             child: BottomAppBar(
-              color: const Color(0xffdd45f5),
+              color: Colors.green,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     IconButton(
-                        icon: const Icon(Icons.edit,
+                        icon: const Icon(Icons.home,
                             color: Colors.white, size: 30.0),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HomeUser()));
+                        }),
                     IconButton(
-                        icon: const Icon(Icons.directions_car,
+                        icon: const Icon(Icons.edit,
                             color: Colors.white, size: 30.0),
                         onPressed: () {}),
                     IconButton(

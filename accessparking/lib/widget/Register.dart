@@ -1,6 +1,10 @@
 import 'package:accessparking/Provider/Placas_Provide.dart';
 import 'package:accessparking/models/AutoP_Model.dart';
 import 'package:accessparking/models/Placas_Model.dart';
+import 'package:accessparking/utils/responsive.dart';
+import 'package:accessparking/widget/HomeUser.dart';
+import 'package:accessparking/widget/Pconfi.dart';
+import 'package:accessparking/widget/paymentpage.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +41,6 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _future = _requestCamera();
@@ -66,6 +69,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(
@@ -83,7 +87,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
             ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(
-                color: Color(0xffdd45f5), // Cambia el color de fondo del AppBar
+                color: Colors.green, // Cambia el color de fondo del AppBar
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(
                       20.0), // Redondea el borde inferior izquierdo
@@ -187,10 +191,10 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                               value: dropdownValue,
                               icon: const Icon(Icons.arrow_downward),
                               elevation: 16,
-                              style: const TextStyle(color: Colors.deepPurple),
+                              style: const TextStyle(color: Colors.green),
                               underline: Container(
                                 height: 2,
-                                color: Colors.deepPurpleAccent,
+                                color: Colors.green,
                               ),
                               onChanged: (String? value) {
                                 // This is called when the user selects an item.
@@ -232,7 +236,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                     right: 40,
                     child: IconButton(
                       icon: const Icon(Icons.camera_alt_outlined,
-                          color: Color(0xffdd45f5), size: 30.0),
+                          color: Colors.green, size: 30.0),
                       onPressed: () {
                         String placa = _placa.text;
                         String idPropietario = _id.text;
@@ -270,7 +274,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
         ),
       )),
       bottomNavigationBar: SizedBox(
-        height: 60.0,
+        height: responsive.height * 0.09,
         child: ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(
@@ -279,22 +283,33 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                   20.0), // Redondea los bordes superiores derechos
             ),
             child: BottomAppBar(
-              color: const Color(0xffdd45f5),
+              color: Colors.green,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     IconButton(
-                        icon: const Icon(Icons.edit,
+                        icon: const Icon(Icons.home_filled,
                             color: Colors.white, size: 30.0),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HomeUser()));
+                        }),
                     IconButton(
                         icon: const Icon(Icons.directions_car,
                             color: Colors.white, size: 30.0),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Pconfi(
+                                    text: '',
+                                  )));
+                        }),
                     IconButton(
                         icon: const Icon(Icons.credit_card,
                             color: Colors.white, size: 30.0),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const paymentpage()));
+                        }),
                   ]),
             )),
       ),

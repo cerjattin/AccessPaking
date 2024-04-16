@@ -1,3 +1,7 @@
+import 'package:accessparking/Provider/AutoP_Provider.dart';
+import 'package:accessparking/Provider/Placas_Provide.dart';
+import 'package:accessparking/models/AutoP_Model.dart';
+import 'package:accessparking/models/Placas_Model.dart';
 import 'package:accessparking/widget/CustomerDrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -12,6 +16,7 @@ class Visitor extends StatefulWidget {
 
 class _VisitorState extends State<Visitor> {
   DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now();
 
   Future<void> _selectStartDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -26,6 +31,26 @@ class _VisitorState extends State<Visitor> {
       });
     }
   }
+
+  Future<void> _selectEndDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _endDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != _endDate)
+      setState(() {
+        _endDate = picked;
+      });
+  }
+
+  final PlacasProvider placasProvider = PlacasProvider();
+  final AutopProvider autopProvider = AutopProvider();
+  final TextEditingController _idP = TextEditingController();
+  final TextEditingController _placa = TextEditingController();
+  final TextEditingController _id = TextEditingController();
+  final TextEditingController _name = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -217,7 +242,35 @@ class _VisitorState extends State<Visitor> {
                     child: IconButton(
                       icon: const Icon(Icons.camera_alt_outlined,
                           color: Color(0xffdd45f5), size: 30.0),
-                      onPressed: () {
+                      onPressed: () async {
+                        String propietario = _idP.text;
+                        String placa = _placa.text;
+                        String idVisitante = _id.text;
+                        String nombreVisitante = _name.text;
+                        PlacasModel placasModel = PlacasModel(
+                          saldo: '0',
+                          estado: '0',
+                          id: propietario,
+                          idpropietario: '',
+                          namePropietario: '',
+                          placaAutor: AutopModel(
+                            document: idVisitante,
+                            idautorizado: placa,
+                            nameAutorizado: nombreVisitante,
+                          ),
+                        );
+
+                        placasProvider.crearplaca(placasModel).then((success) {
+                          if (success) {
+                            return 'FUNCIONO';
+                            // Operación exitosa
+                            // Mostrar un mensaje o realizar alguna acción adicional
+                          } else {
+                            return 'FALLO';
+                            // Operación fallida
+                            // Mostrar un mensaje de error o realizar alguna acción adicional
+                          }
+                        });
                         // Agrega aquí la lógica para manejar el botón de la cámara
                       },
                     )),

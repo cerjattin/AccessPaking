@@ -14,7 +14,7 @@ class _paymentpageState extends State<paymentpage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.purple, //color
+          backgroundColor: Colors.green, //color
           title: const Text(''),
           actions: [
             Container(

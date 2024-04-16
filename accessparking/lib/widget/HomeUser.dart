@@ -1,3 +1,7 @@
+import 'package:accessparking/utils/responsive.dart';
+import 'package:accessparking/widget/Pconfi.dart';
+import 'package:accessparking/widget/Register.dart';
+import 'package:accessparking/widget/paymentpage.dart';
 import 'package:flutter/material.dart';
 import '/Localstorage/Sharepreference.dart';
 import 'CustomerDrawer.dart';
@@ -16,6 +20,7 @@ class _HomeUserState extends State<HomeUser> {
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(
@@ -33,7 +38,7 @@ class _HomeUserState extends State<HomeUser> {
             ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(
-                color: Color(0xffdd45f5), // Cambia el color de fondo del AppBar
+                color: Colors.green, // Cambia el color de fondo del AppBar
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(
                       20.0), // Redondea el borde inferior izquierdo
@@ -69,7 +74,7 @@ class _HomeUserState extends State<HomeUser> {
                 child: PageView(
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(right: 0),
+                        padding: const EdgeInsets.only(right: 10, left: 10),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
@@ -80,7 +85,7 @@ class _HomeUserState extends State<HomeUser> {
                           ),
                         )),
                     Padding(
-                        padding: const EdgeInsets.only(right: 0),
+                        padding: const EdgeInsets.only(right: 10, left: 10),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
@@ -91,7 +96,7 @@ class _HomeUserState extends State<HomeUser> {
                           ),
                         )),
                     Padding(
-                        padding: const EdgeInsets.only(right: 0),
+                        padding: const EdgeInsets.only(right: 10, left: 10),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
@@ -149,7 +154,7 @@ class _HomeUserState extends State<HomeUser> {
                 //saldo cartera
                 child: TextField(
                   enabled: false,
-                  controller: TextEditingController(text: prefs.admmes),
+                  controller: TextEditingController(text: 'Hola'),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -171,8 +176,7 @@ class _HomeUserState extends State<HomeUser> {
                 //fecha pago
                 child: TextField(
                   enabled: false,
-                  controller: TextEditingController(
-                      text: '${prefs.anoadm}-${prefs.mesadm}'),
+                  controller: TextEditingController(text: 'HOLA'),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -202,7 +206,7 @@ class _HomeUserState extends State<HomeUser> {
                   title: const Text('Autorizado para ingreso a Parqueadero',
                       style: TextStyle(color: Colors.black)),
                   controlAffinity: ListTileControlAffinity.leading,
-                  value: prefs.status,
+                  value: true,
                   onChanged: null,
                 ),
               ),
@@ -214,7 +218,7 @@ class _HomeUserState extends State<HomeUser> {
         ),
       )),
       bottomNavigationBar: SizedBox(
-        height: 60.0,
+        height: responsive.height * 0.09,
         child: ClipRRect(
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(
@@ -223,22 +227,35 @@ class _HomeUserState extends State<HomeUser> {
                   20.0), // Redondea los bordes superiores derechos
             ),
             child: BottomAppBar(
-              color: const Color(0xffdd45f5),
+              color: Colors.green,
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     IconButton(
                         icon: const Icon(Icons.edit,
                             color: Colors.white, size: 30.0),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Register(
+                                    textv: '',
+                                  )));
+                        }),
                     IconButton(
                         icon: const Icon(Icons.directions_car,
                             color: Colors.white, size: 30.0),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const Pconfi(
+                                    text: '',
+                                  )));
+                        }),
                     IconButton(
                         icon: const Icon(Icons.credit_card,
                             color: Colors.white, size: 30.0),
-                        onPressed: () {}),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const paymentpage()));
+                        }),
                   ]),
             )),
       ),
