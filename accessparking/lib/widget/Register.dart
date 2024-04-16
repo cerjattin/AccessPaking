@@ -1,3 +1,6 @@
+import 'package:accessparking/Provider/Placas_Provide.dart';
+import 'package:accessparking/models/AutoP_Model.dart';
+import 'package:accessparking/models/Placas_Model.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +28,10 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> with WidgetsBindingObserver {
   bool estado = false;
   bool _isGranted = false;
+  final PlacasProvider placasProvider = PlacasProvider();
+  final TextEditingController _placa = TextEditingController();
+  final TextEditingController _id = TextEditingController();
+  final TextEditingController _name = TextEditingController();
   late final Future<void> _future;
   CameraController? _cameraController;
 
@@ -38,7 +45,6 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     WidgetsBinding.instance.removeObserver(this);
     stopCamera();
     super.dispose();
@@ -49,13 +55,13 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
     if (_cameraController == null || !_cameraController!.value.isInitialized) {
       return;
     }
-    if (state== AppLifecycleState.inactive){
-      stopCamera()
-    }else if(state == AppLifecycleState.resumed && 
-          _cameraController!= null && 
-          _cameraController!.value.isInitialized){
-            startCamera();
-          }
+    if (state == AppLifecycleState.inactive) {
+      stopCamera();
+    } else if (state == AppLifecycleState.resumed &&
+        _cameraController != null &&
+        _cameraController!.value.isInitialized) {
+      startCamera();
+    }
   }
 
   @override
@@ -228,6 +234,33 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                       icon: const Icon(Icons.camera_alt_outlined,
                           color: Color(0xffdd45f5), size: 30.0),
                       onPressed: () {
+                        String placa = _placa.text;
+                        String idPropietario = _id.text;
+                        String nombreResponsable = _name.text;
+                        PlacasModel placasModel = PlacasModel(
+                          saldo: '0',
+                          estado: '0',
+                          id: placa,
+                          idpropietario: idPropietario,
+                          namePropietario: nombreResponsable,
+                          placaAutor: AutopModel(
+                            document: '',
+                            idautorizado: '',
+                            nameAutorizado: '',
+                          ),
+                        );
+
+                        placasProvider.crearplaca(placasModel).then((success) {
+                          if (success) {
+                            return 'FUNCIONO';
+                            // Operación exitosa
+                            // Mostrar un mensaje o realizar alguna acción adicional
+                          } else {
+                            return 'FALLO';
+                            // Operación fallida
+                            // Mostrar un mensaje de error o realizar alguna acción adicional
+                          }
+                        });
                         // Agrega aquí la lógica para manejar el botón de la cámara
                       },
                     )),

@@ -1,16 +1,17 @@
 import 'dart:convert';
+import 'package:accessparking/models/Acces_Model.dart';
 import 'package:http/http.dart' as http;
-import '../Models/Control.dart';
 
-class CuotaProvider {
-  final String _endpoint = "https://dbpark-767b1-default-rtdb.firebaseio.com";
+class AccesProvider {
+  final String _endpoint =
+      "https://dbapark-ad140-default-rtdb.firebaseio.com/parking";
 
-  Future<bool> crearcontrol(ControlP user) async {
+  Future<bool> crearaceso(AccessModel access) async {
     try {
-      final url = '$_endpoint/parking/ctrl_park/regact.json';
+      final url = '$_endpoint/Accespark/idplaca.json';
       final resp = await http.post(
         Uri.parse(url),
-        body: controlPToJson(user),
+        body: accessModelToJson(access),
       );
 
       if (resp.statusCode == 200) {
@@ -23,30 +24,28 @@ class CuotaProvider {
     } catch (e) {
       print(e);
       return false;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<List<ControlP>> getControl() async {
-    final url = '$_endpoint/parking/ctrl_park/regact.json';
+  Future<List<AccessModel>> getaccess() async {
+    final url = '$_endpoint/Accespark/idplaca.json';
     final resp = await http.get(Uri.parse(url));
-
     if (resp.statusCode == 200) {
       String body = utf8.decode(resp.bodyBytes);
       final jsonData = jsonDecode(body);
-      final user = Control.fromJsonList(jsonData);
-      return user.items;
+      final access = Access.fromJsonList(jsonData);
+      return access.items;
     } else {
       throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<bool> updatecontrol(ControlP user) async {
+  Future<bool> actuacces(AccessModel access) async {
     try {
-      final url = '$_endpoint/parking/ctrl_park/regact/${user.idreg}.json';
-      final resp = await http.post(
+      final url = '$_endpoint/Accespark/idplaca/${access.placa}';
+      final resp = await http.put(
         Uri.parse(url),
-        body: controlPToJson(user),
+        body: accessModelToJson(access),
       );
 
       if (resp.statusCode == 200) {
@@ -59,13 +58,12 @@ class CuotaProvider {
     } catch (e) {
       print(e);
       return false;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<int> borrarControl(String idreg) async {
+  Future<int> borraracces(String placa) async {
     try {
-      final url = '$_endpoint/parking/ctrl_park/regact/$idreg.json';
+      final url = '$_endpoint/Accespark/idplaca/$placa.json';
       final resp = await http.delete(Uri.parse(url));
 
       if (resp.statusCode == 200) {
@@ -78,7 +76,6 @@ class CuotaProvider {
     } catch (e) {
       print(e);
       return 0;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 }

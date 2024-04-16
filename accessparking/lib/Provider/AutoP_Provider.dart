@@ -1,16 +1,17 @@
 import 'dart:convert';
+import 'package:accessparking/models/AutoP_Model.dart';
 import 'package:http/http.dart' as http;
-import '../Models/Conjunto.dart';
 
-class CuotaProvider {
-  final String _endpoint = "https://dbpark-767b1-default-rtdb.firebaseio.com";
+class AutopProvider {
+  final String _endpoint =
+      "https://dbapark-ad140-default-rtdb.firebaseio.com/parking";
 
-  Future<bool> crearcontrol(Conjunto user) async {
+  Future<bool> crearautoplaca(AutopModel autop) async {
     try {
-      final url = '$_endpoint/parking/conjuntos/idConjunto.json';
+      final url = '$_endpoint/Placas/idplaca/placa_autor.jsonr';
       final resp = await http.post(
         Uri.parse(url),
-        body: conjuntoToJson(user),
+        body: autopModelToJson(autop),
       );
 
       if (resp.statusCode == 200) {
@@ -23,32 +24,30 @@ class CuotaProvider {
     } catch (e) {
       print(e);
       return false;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<List<Conjunto>> getControl() async {
-    final url = '$_endpoint/parking/conjuntos/idConjunto.json';
+  Future<List<AutopModel>> getautop() async {
+    final url = '$_endpoint/Placas/idplaca/placa_autor.json';
     final resp = await http.get(Uri.parse(url));
-
     if (resp.statusCode == 200) {
       String body = utf8.decode(resp.bodyBytes);
       final jsonData = jsonDecode(body);
-      final user = Residential.fromJsonList(jsonData);
-      return user.items;
+      final autop = Autop.fromJsonList(jsonData);
+      return autop.items;
     } else {
       throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<bool> updatecontrol(Conjunto user) async {
+  Future<bool> actuautop(AutopModel autop) async {
     try {
-      final url = '$_endpoint/parking/conjuntos/idConjunto${user.id}.json';
-      final resp = await http.post(
+      final url =
+          '$_endpoint/Placas/idplaca/placa_autor/${autop.idautorizado}.json';
+      final resp = await http.put(
         Uri.parse(url),
-        body: conjuntoToJson(user),
+        body: autopModelToJson(autop),
       );
-
       if (resp.statusCode == 200) {
         final decodeData = jsonDecode(resp.body);
         print(decodeData);
@@ -59,13 +58,12 @@ class CuotaProvider {
     } catch (e) {
       print(e);
       return false;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<int> borrarControl(String id) async {
+  Future<int> borrarautop(String idautorizado) async {
     try {
-      final url = '$_endpoint/parking/conjuntos/idConjunto/$id.json';
+      final url = '$_endpoint/Placas/idplaca/placa_autor/$idautorizado.json';
       final resp = await http.delete(Uri.parse(url));
 
       if (resp.statusCode == 200) {
@@ -78,7 +76,6 @@ class CuotaProvider {
     } catch (e) {
       print(e);
       return 0;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 }

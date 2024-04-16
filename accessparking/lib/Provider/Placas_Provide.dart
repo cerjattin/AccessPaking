@@ -1,16 +1,17 @@
 import 'dart:convert';
+import 'package:accessparking/models/Placas_Model.dart';
 import 'package:http/http.dart' as http;
-import '../Models/Placa.dart';
 
-class PlacarProvider {
-  final String _endpoint = "https://dbpark-767b1-default-rtdb.firebaseio.com";
+class PlacasProvider {
+  final String _endpoint =
+      "https://dbapark-ad140-default-rtdb.firebaseio.com/parking";
 
-  Future<bool> crearplaca(Placa user) async {
+  Future<bool> crearplaca(PlacasModel placas) async {
     try {
-      final url = '$_endpoint/parking/placas_reg/idautorizacion/idautori.json';
+      final url = '$_endpoint/Placas/idplaca.json';
       final resp = await http.post(
         Uri.parse(url),
-        body: placaToJson(user),
+        body: placasModelToJson(placas),
       );
 
       if (resp.statusCode == 200) {
@@ -23,33 +24,29 @@ class PlacarProvider {
     } catch (e) {
       print(e);
       return false;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<List<Placa>> getPropiertaio() async {
-    final url = '$_endpoint/parking/placas_reg/idautorizacion/idautori.json';
+  Future<List<PlacasModel>> getplacas() async {
+    final url = '$_endpoint/Placas/idplaca.json';
     final resp = await http.get(Uri.parse(url));
-
     if (resp.statusCode == 200) {
       String body = utf8.decode(resp.bodyBytes);
       final jsonData = jsonDecode(body);
-      final user = Plate.fromJsonList(jsonData);
-      return user.items;
+      final placa = Placa.fromJsonList(jsonData);
+      return placa.items;
     } else {
       throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<bool> updatepropietario(Placa user) async {
+  Future<bool> actuplaca(String id, PlacasModel placas) async {
     try {
-      final url =
-          '$_endpoint/parking/placas_reg/idautorizacion/idautori/${user.placa}.json';
-      final resp = await http.post(
+      final url = '$_endpoint/Placas/idplaca/$id.json';
+      final resp = await http.put(
         Uri.parse(url),
-        body: placaToJson(user),
+        body: placasModelToJson(placas),
       );
-
       if (resp.statusCode == 200) {
         final decodeData = jsonDecode(resp.body);
         print(decodeData);
@@ -60,14 +57,12 @@ class PlacarProvider {
     } catch (e) {
       print(e);
       return false;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 
-  Future<int> borrarUser(String placa) async {
+  Future<int> borrarplacas(String id) async {
     try {
-      final url =
-          '$_endpoint/parking/placas_reg/idautorizacion/idautori$placa.json';
+      final url = '$_endpoint/Placas/idplaca/$id.json';
       final resp = await http.delete(Uri.parse(url));
 
       if (resp.statusCode == 200) {
@@ -80,7 +75,6 @@ class PlacarProvider {
     } catch (e) {
       print(e);
       return 0;
-      //throw Exception("Ocurrio Algo ${resp.statusCode}");
     }
   }
 }

@@ -1,15 +1,11 @@
-// To parse this JSON data, do
-//
-//     final usuario = usuarioFromJson(jsonString);
-
 import 'dart:convert';
 
-Usuario usuarioFromJson(String str) => Usuario.fromJson(json.decode(str));
+UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
-String usuarioToJson(Usuario data) => json.encode(data.toJson());
+String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class User {
-  List<Usuario> items = [];
+  List<UserModel> items = [];
 
   User();
 
@@ -18,7 +14,7 @@ class User {
       return;
     } else {
       jsonList.forEach((id, prod) {
-        final user = Usuario.fromJson(prod);
+        final user = UserModel.fromJson(prod);
         user.id = id;
 
         items.add(user);
@@ -27,20 +23,20 @@ class User {
   }
 }
 
-class Usuario {
+class UserModel {
   String? id;
   String? mail;
   String? nameuser;
   String? pass;
 
-  Usuario({
-    required this.id,
-    required this.mail,
-    required this.nameuser,
-    required this.pass,
+  UserModel({
+    this.id,
+    this.mail,
+    this.nameuser,
+    this.pass,
   });
 
-  factory Usuario.fromJson(Map<String, dynamic> json) => Usuario(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
         mail: json["mail"],
         nameuser: json["nameuser"],

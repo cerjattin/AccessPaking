@@ -25,7 +25,7 @@ class CustomerDrawer extends StatelessWidget {
             title: const Text('Registro Visitantes'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Visitor(
+                  builder: (context) => const Visitor(
                         textv: '',
                       )));
             },
@@ -34,7 +34,7 @@ class CustomerDrawer extends StatelessWidget {
             title: const Text('Registro Propietarios'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Register(
+                  builder: (context) => const Register(
                         textv: '',
                       )));
             },
@@ -43,7 +43,7 @@ class CustomerDrawer extends StatelessWidget {
             title: const Text('Ingreso de Vehiculo'),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Pconfi(
+                  builder: (context) => const Pconfi(
                         text: '',
                       )));
             },

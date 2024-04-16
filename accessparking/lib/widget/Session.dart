@@ -1,9 +1,8 @@
+import 'package:accessparking/Provider/User_Provider.dart';
+import 'package:accessparking/models/User_Model.dart';
 import 'package:accessparking/utils/responsive.dart';
-import 'package:flutter/foundation.dart';
+import 'package:accessparking/widget/ConsultAdm.dart';
 import 'package:flutter/material.dart';
-import '../Provider/Usuario_Provider.dart';
-import '../models/Usuario.dart';
-import '/Localstorage/Sharepreference.dart';
 import 'HomeUser.dart';
 
 class Session extends StatefulWidget {
@@ -12,6 +11,25 @@ class Session extends StatefulWidget {
 
   @override
   State<Session> createState() => _SessionState();
+}
+
+class AuthService {
+  final UserProvider _userProvider = UserProvider();
+
+  Future<String?> iniciarSesion(String email, String password) async {
+    try {
+      final List<UserModel> users = await _userProvider.getuser();
+      for (var user in users) {
+        if (user.mail == email && user.pass == password) {
+          // Aquí podrías determinar el tipo de usuario
+          return "residente"; // Simula que todos son residentes, ajusta según tus necesidades
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
 }
 
 class _SessionState extends State<Session> {
@@ -47,13 +65,6 @@ class _SessionState extends State<Session> {
                       Container(
                         //logo
                         padding: EdgeInsets.all(5.0),
-                        /*child: const CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          backgroundImage: AssetImage(
-                            'assets/logo.png',
-                          ),
-                          radius: 110.0,
-                        ),*/
                         margin: const EdgeInsets.symmetric(
                             horizontal: 50, vertical: 10),
                         height: responsive.height * 0.2,
@@ -96,7 +107,7 @@ class _SessionState extends State<Session> {
                               ),
                               filled: true,
                               fillColor: Colors.white),
-                               obscureText: true,
+                          obscureText: true,
                         ),
                       ),
                       Container(
@@ -153,53 +164,40 @@ class _SessionState extends State<Session> {
   }
 
   void _login(BuildContext context) async {
-    String user = _emailController.text;
+    String email = _emailController.text;
     String password = _passwordController.text;
-    bool isloged = false;
 
-    try {
-      List<Usuario> usuarios = await UsuarioProvider().getUser();
-      if (kDebugMode) {
-        print("Usuarios obtenidos: $usuarios");
-      }
-      for (Usuario u in usuarios) {
-        print(u.mail);
-        print(user);
-        print(u.pass);
-        print(password);
-        if (u.mail == user && u.pass == password) {
-          _saveUserData(u);
-          isloged = true;
-          break;
-        }
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        print("Error al obtener usuarios: $e");
-      }
-    }
+    String? userType = await AuthService().iniciarSesion(email, password);
 
-    if (isloged) {
-      final prefs = PrefernciaUsuario();
-      await prefs.initPrefs();
-
-      // ignore: use_build_context_synchronously
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const HomeUser()));
+    if (userType != null) {
+      // Aquí decides a qué página navegar basado en el tipo de usuario
+      if (userType == 'residente') {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => HomeUser()));
+      } else {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const ConsultAdm(textv: '')),
+        );
+      }
     } else {
-      // Lógica para manejar inicio de sesión fallido
-      // Puedes mostrar un mensaje de error, por ejemplo.
-      if (kDebugMode) {
-        print("Inicio de sesión fallido");
-      }
+      // Mostrar algún mensaje de error
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Error de Inicio de Sesión'),
+            content: const Text('Correo electrónico o contraseña incorrectos.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
-  }
-
-  void _saveUserData(Usuario user) async {
-    final prefs = PrefernciaUsuario();
-    await prefs.initPrefs();
-
-    prefs.username = user.nameuser ?? '';
-    // Otros campos que quieras almacenar en las preferencias
   }
 }
