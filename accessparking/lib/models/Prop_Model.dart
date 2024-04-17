@@ -31,6 +31,8 @@ class PropModel {
   String name;
   String telefono;
   String torre;
+  String saldop;
+  String fechapago;
 
   PropModel({
     required this.placa,
@@ -40,6 +42,8 @@ class PropModel {
     required this.name,
     required this.telefono,
     required this.torre,
+    required this.saldop,
+    required this.fechapago,
   });
 
   factory PropModel.fromJson(Map<String, dynamic> json) => PropModel(
@@ -50,6 +54,8 @@ class PropModel {
         name: json["name"],
         telefono: json["telefono"],
         torre: json["torre"],
+        saldop: json["SaldoP"],
+        fechapago: json["Fecha_pago"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -60,5 +66,7 @@ class PropModel {
         "name": name,
         "telefono": telefono,
         "torre": torre,
+        "SaldoP": saldop,
+        "Fecha_pago": fechapago,
       };
 }

@@ -212,14 +212,15 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                       String cel = _cel.text;
                       String torre = _torre.text;
                       PropModel propModel = PropModel(
-                        placa: placa,
-                        apto: apto,
-                        id: idPropietario,
-                        mail: email,
-                        name: nombreResponsable,
-                        telefono: cel,
-                        torre: torre,
-                      );
+                          placa: placa,
+                          apto: apto,
+                          id: idPropietario,
+                          mail: email,
+                          name: nombreResponsable,
+                          telefono: cel,
+                          torre: torre,
+                          saldop: "10000",
+                          fechapago: "2024-12-31");
 
                       propProvider.crearprop(propModel).then((success) {
                         if (success) {

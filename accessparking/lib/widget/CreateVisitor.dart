@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, curly_braces_in_flow_control_structures
 
 import 'package:accessparking/Provider/AutoP_Provider.dart';
 import 'package:accessparking/Provider/Placas_Provide.dart';
@@ -55,11 +55,12 @@ class _VisitorState extends State<Visitor> {
   final AutopProvider autopProvider = AutopProvider();
   final TextEditingController _placpr = TextEditingController();
   final TextEditingController _idP = TextEditingController();
-  final TextEditingController _placa = TextEditingController();
   final TextEditingController _id = TextEditingController();
   final TextEditingController _name = TextEditingController();
   final TextEditingController _fbeg = TextEditingController();
   final TextEditingController _fend = TextEditingController();
+  final TextEditingController _plaut = TextEditingController();
+  final TextEditingController _namepr = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +134,7 @@ class _VisitorState extends State<Visitor> {
                                   height: 10,
                                 ),
                                 TextField(
+                                  controller: _namepr,
                                   decoration: InputDecoration(
                                       labelText: 'Nombre del responsable',
                                       border: OutlineInputBorder(
@@ -159,7 +161,7 @@ class _VisitorState extends State<Visitor> {
                                   SizedBox(
                                     width: 230,
                                     child: TextField(
-                                      controller: _placa,
+                                      controller: _plaut,
                                       decoration: InputDecoration(
                                           labelText: 'Placa Invitado',
                                           border: OutlineInputBorder(
@@ -257,7 +259,7 @@ class _VisitorState extends State<Visitor> {
                           color: Colors.green, size: 30.0),
                       onPressed: () async {
                         String propietario = _idP.text;
-                        String placa = _placa.text;
+                        String placpr = _placpr as String;
                         String idVisitante = _id.text;
                         String nombreVisitante = _name.text;
                         PlacasModel placasModel = PlacasModel(
@@ -266,7 +268,6 @@ class _VisitorState extends State<Visitor> {
                           id: propietario,
                           placaAutor: AutopModel(
                             document: idVisitante,
-                            idautorizado: placa,
                             nameAutorizado: nombreVisitante,
                           ),
                         );
