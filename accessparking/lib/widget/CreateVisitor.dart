@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:accessparking/Provider/AutoP_Provider.dart';
 import 'package:accessparking/Provider/Placas_Provide.dart';
 import 'package:accessparking/models/AutoP_Model.dart';
@@ -72,8 +74,7 @@ class _VisitorState extends State<Visitor> {
               ],
               flexibleSpace: Container(
                 decoration: const BoxDecoration(
-                  color:
-                      Color(0xffdd45f5), // Cambia el color de fondo del AppBar
+                  color: Colors.green, // Cambia el color de fondo del AppBar
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(
                         20.0), // Redondea el borde inferior izquierdo
@@ -140,8 +141,8 @@ class _VisitorState extends State<Visitor> {
                             color: const Color(0xffdcdbdb),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          margin: EdgeInsets.all(20.0),
-                          padding: EdgeInsets.all(20.0),
+                          margin: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: <Widget>[
@@ -199,7 +200,7 @@ class _VisitorState extends State<Visitor> {
                                       hintText: 'Fecha de Inicio',
                                       suffixIcon: IconButton(
                                         icon: const Icon(Icons.calendar_today,
-                                            color: Color(0xffdd45f5), size: 20),
+                                            color: Colors.green, size: 20),
                                         onPressed: () =>
                                             _selectStartDate(context),
                                       )),
@@ -218,7 +219,7 @@ class _VisitorState extends State<Visitor> {
                                       hintText: 'Fecha Final',
                                       suffixIcon: IconButton(
                                         icon: const Icon(Icons.calendar_today,
-                                            color: Color(0xffdd45f5), size: 20),
+                                            color: Colors.green, size: 20),
                                         onPressed: () =>
                                             _selectStartDate(context),
                                       )),
@@ -280,7 +281,7 @@ class _VisitorState extends State<Visitor> {
                     right: 40,
                     child: IconButton(
                       icon: const Icon(Icons.camera_alt_outlined,
-                          color: Color(0xffdd45f5), size: 30.0),
+                          color: Colors.green, size: 30.0),
                       onPressed: () {
                         // Agrega aquí la lógica para manejar el botón de la cámara
                       },

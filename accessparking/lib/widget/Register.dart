@@ -1,14 +1,11 @@
-import 'package:accessparking/Provider/Placas_Provide.dart';
-import 'package:accessparking/models/AutoP_Model.dart';
-import 'package:accessparking/models/Placas_Model.dart';
+import 'package:accessparking/Provider/Prop_Provider.dart';
+import 'package:accessparking/models/Prop_Model.dart';
 import 'package:accessparking/utils/responsive.dart';
+import 'package:accessparking/widget/CamRegister.dart';
 import 'package:accessparking/widget/HomeUser.dart';
 import 'package:accessparking/widget/Pconfi.dart';
 import 'package:accessparking/widget/paymentpage.dart';
-import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'CustomerDrawer.dart';
 
 const List<String> list = <String>[
@@ -31,41 +28,16 @@ class Register extends StatefulWidget {
 
 class _RegisterState extends State<Register> with WidgetsBindingObserver {
   bool estado = false;
-  bool _isGranted = false;
-  final PlacasProvider placasProvider = PlacasProvider();
+  final PropProvider propProvider = PropProvider();
   final TextEditingController _placa = TextEditingController();
   final TextEditingController _id = TextEditingController();
   final TextEditingController _name = TextEditingController();
-  late final Future<void> _future;
-  CameraController? _cameraController;
+  final TextEditingController _cel = TextEditingController();
+  final TextEditingController _mail = TextEditingController();
+  final TextEditingController _torre = TextEditingController();
+  final TextEditingController _apto = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _future = _requestCamera();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    stopCamera();
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (_cameraController == null || !_cameraController!.value.isInitialized) {
-      return;
-    }
-    if (state == AppLifecycleState.inactive) {
-      stopCamera();
-    } else if (state == AppLifecycleState.resumed &&
-        _cameraController != null &&
-        _cameraController!.value.isInitialized) {
-      startCamera();
-    }
-  }
+  get textv => null;
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +91,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             SizedBox(
                               width: 230,
                               child: TextField(
+                                controller: TextEditingController(text: textv),
                                 decoration: InputDecoration(
                                     labelText: 'Placa',
                                     border: OutlineInputBorder(
@@ -227,8 +200,36 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                         ]),
                   ),
                   ElevatedButton(
-                    child: const Text('Confirmar ingreso'),
-                    onPressed: () {},
+                    child: const Text('Registrar'),
+                    onPressed: () {
+                      String placa = _placa.text;
+                      String idPropietario = _id.text;
+                      String nombreResponsable = _name.text;
+                      String email = _mail.text;
+                      String apto = _apto.text;
+                      String cel = _cel.text;
+                      String torre = _torre.text;
+                      PropModel propModel = PropModel(
+                        apto: apto,
+                        id: idPropietario,
+                        mail: email,
+                        name: nombreResponsable,
+                        telefono: cel,
+                        torre: torre,
+                      );
+
+                      propProvider.crearprop(propModel).then((success) {
+                        if (success) {
+                          return 'FUNCIONO';
+                          // Operación exitosa
+                          // Mostrar un mensaje o realizar alguna acción adicional
+                        } else {
+                          return 'FALLO';
+                          // Operación fallida
+                          // Mostrar un mensaje de error o realizar alguna acción adicional
+                        }
+                      });
+                    },
                   )
                 ]),
                 Positioned(
@@ -238,34 +239,8 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                       icon: const Icon(Icons.camera_alt_outlined,
                           color: Colors.green, size: 30.0),
                       onPressed: () {
-                        String placa = _placa.text;
-                        String idPropietario = _id.text;
-                        String nombreResponsable = _name.text;
-                        PlacasModel placasModel = PlacasModel(
-                          saldo: '0',
-                          estado: '0',
-                          id: placa,
-                          idpropietario: idPropietario,
-                          namePropietario: nombreResponsable,
-                          placaAutor: AutopModel(
-                            document: '',
-                            idautorizado: '',
-                            nameAutorizado: '',
-                          ),
-                        );
-
-                        placasProvider.crearplaca(placasModel).then((success) {
-                          if (success) {
-                            return 'FUNCIONO';
-                            // Operación exitosa
-                            // Mostrar un mensaje o realizar alguna acción adicional
-                          } else {
-                            return 'FALLO';
-                            // Operación fallida
-                            // Mostrar un mensaje de error o realizar alguna acción adicional
-                          }
-                        });
-                        // Agrega aquí la lógica para manejar el botón de la cámara
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const CamRegister()));
                       },
                     )),
               ],
@@ -314,54 +289,5 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
             )),
       ),
     );
-  }
-
-  Future<void> _requestCamera() async {
-    final status = await Permission.camera.request();
-    //_isPermissionGranted = status == PermissionStatus.granted;
-    _isGranted = status == PermissionStatus.granted;
-  }
-
-  void startCamera() {
-    if (_cameraController != null) {
-      _selectedCamera(_cameraController!.description);
-    }
-  }
-
-  void stopCamera() {
-    if (_cameraController != null) {
-      _cameraController!.dispose();
-    }
-  }
-
-  void _initCameraController(List<CameraDescription> cameras) {
-    if (_cameraController != null) {
-      return;
-    }
-    CameraDescription? camera;
-
-    for (var i = 0; 1 < cameras.length; i++) {
-      final CameraDescription current = cameras[i];
-      if (current.lensDirection == CameraLensDirection.back) {
-        camera = current;
-        break;
-      }
-    }
-    if (camera != null) {
-      _selectedCamera(camera);
-    } else {
-      if (kDebugMode) {
-        print("No back camera available.");
-      }
-    }
-  }
-
-  Future<void> _selectedCamera(CameraDescription camera) async {
-    _cameraController =
-        CameraController(camera, ResolutionPreset.max, enableAudio: false);
-    await _cameraController!.initialize();
-    if (!mounted) {
-      return;
-    }
   }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison, file_names
+
 import 'dart:io';
 import 'package:accessparking/widget/Register.dart';
 import 'package:camera/camera.dart';
@@ -49,48 +51,56 @@ class _CamRegisterState extends State<CamRegister> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Ocr APP'),
-        ),
         body: FutureBuilder(
-          future: _future,
-          builder: (context, snapshot) {
-            return Stack(
-              children: [
-                if (_isGranted)
-                  FutureBuilder<List<CameraDescription>>(
-                    future: availableCameras(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        _initCameraController(snapshot.data!);
-                        return Center(child: CameraPreview(_cameraController!));
-                      } else {
-                        return const LinearProgressIndicator();
-                      }
-                    },
-                  ),
-                Container(
-                    child: _isGranted
-                        ? Column(
-                            children: [
-                              Expanded(child: Container()),
-                              Padding(
-                                padding: const EdgeInsets.only(bottom: 30.0),
-                                child: MaterialButton(
-                                  color: Colors.blueAccent,
-                                  onPressed: _scan,
-                                  child: const Text('Capturar'),
-                                ),
-                              )
-                            ],
+      future: _future,
+      builder: (context, snapshot) {
+        return Stack(
+          children: [
+            if (_isGranted)
+              FutureBuilder<List<CameraDescription>>(
+                future: availableCameras(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    _initCameraController(snapshot.data!);
+                    return Center(child: CameraPreview(_cameraController!));
+                  } else {
+                    return const LinearProgressIndicator();
+                  }
+                },
+              ),
+            Container(
+                child: _isGranted
+                    ? Column(
+                        children: [
+                          Expanded(child: Container()),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 30.0),
+                            child: ElevatedButton(
+                              onPressed: _scan,
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(20),
+                                backgroundColor:
+                                    Colors.green, // <-- Button color
+                                foregroundColor:
+                                    Colors.blueGrey, // <-- Splash color
+                              ),
+                              child: const Icon(
+                                Icons.camera_front,
+                                color: Colors.white,
+                                size: 70,
+                              ),
+                            ),
                           )
-                        : const Center(
-                            child: Text('Actualizar Permisos'),
-                          ))
-              ],
-            );
-          },
-        ));
+                        ],
+                      )
+                    : const Center(
+                        child: Text('Actualizar Permisos'),
+                      ))
+          ],
+        );
+      },
+    ));
   }
 
   Future<void> _requestCamera() async {

@@ -10,7 +10,7 @@ class ConsultAdm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.purple, //color
+          backgroundColor: Colors.green, //color
           title: const Text(''),
           actions: [
             Container(
@@ -27,24 +27,24 @@ class ConsultAdm extends StatelessWidget {
               height: 30,
             ),
             Container(
-              child: const Padding(
-                padding: EdgeInsets.only(left: 180),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 180),
                 child: Text('Escanea Placa de Vehiculo'),
               ),
             ),
             Container(
-                margin: const EdgeInsets.all(20),
-                padding: const EdgeInsets.all(20),
+                margin: EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
                 height: 180,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: const Color(0x95313131),
+                  color: Color(0x95313131),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: IconButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => registration()));
+                          builder: (context) => const registration()));
                     },
                     icon: const Icon(
                       Icons.camera,
