@@ -30,16 +30,20 @@ class PlacasModel {
   String? saldo;
   String? estado;
   String? id;
-  String? idpropietario;
-  String? namePropietario;
+  String? date_begin;
+  String? date_end;
+  String? placut;
+  String? placpr;
   AutopModel? placaAutor;
 
   PlacasModel({
     this.saldo,
     this.estado,
     this.id,
-    this.idpropietario,
-    this.namePropietario,
+    this.date_begin,
+    this.date_end,
+    this.placut,
+    this.placpr,
     this.placaAutor,
   });
 
@@ -47,8 +51,10 @@ class PlacasModel {
         saldo: json["Saldo"],
         estado: json["estado"],
         id: json["id"],
-        idpropietario: json["idpropietario"],
-        namePropietario: json["name_propietario"],
+        date_begin: json["date_begin"],
+        date_end: json["date_end"],
+        placut: json["Placaaut"],
+        placpr: json["Placapr"],
         placaAutor: AutopModel.fromJson(json["placa_autor"]),
       );
 
@@ -56,8 +62,10 @@ class PlacasModel {
         "Saldo": saldo,
         "estado": estado,
         "id": id,
-        "idpropietario": idpropietario,
-        "name_propietario": namePropietario,
+        "date_begin": date_begin,
+        "date_end": date_end,
+        "Placaut": placut,
+        "Placapr": placpr,
         "placa_autor": placaAutor?.toJson(),
       };
 }

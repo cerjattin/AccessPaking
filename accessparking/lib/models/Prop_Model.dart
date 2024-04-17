@@ -24,6 +24,7 @@ class Propi {
 }
 
 class PropModel {
+  String placa;
   String apto;
   String id;
   String mail;
@@ -32,6 +33,7 @@ class PropModel {
   String torre;
 
   PropModel({
+    required this.placa,
     required this.apto,
     required this.id,
     required this.mail,
@@ -41,6 +43,7 @@ class PropModel {
   });
 
   factory PropModel.fromJson(Map<String, dynamic> json) => PropModel(
+        placa: json["Placa"],
         apto: json["apto"],
         id: json["id"],
         mail: json["mail"],
@@ -50,6 +53,7 @@ class PropModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "Placa": placa,
         "apto": apto,
         "id": id,
         "mail": mail,

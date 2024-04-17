@@ -4,7 +4,11 @@ import 'package:accessparking/Provider/AutoP_Provider.dart';
 import 'package:accessparking/Provider/Placas_Provide.dart';
 import 'package:accessparking/models/AutoP_Model.dart';
 import 'package:accessparking/models/Placas_Model.dart';
+import 'package:accessparking/utils/responsive.dart';
 import 'package:accessparking/widget/CustomerDrawer.dart';
+import 'package:accessparking/widget/HomeUser.dart';
+import 'package:accessparking/widget/Pconfi.dart';
+import 'package:accessparking/widget/paymentpage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -49,13 +53,17 @@ class _VisitorState extends State<Visitor> {
 
   final PlacasProvider placasProvider = PlacasProvider();
   final AutopProvider autopProvider = AutopProvider();
+  final TextEditingController _placpr = TextEditingController();
   final TextEditingController _idP = TextEditingController();
   final TextEditingController _placa = TextEditingController();
   final TextEditingController _id = TextEditingController();
   final TextEditingController _name = TextEditingController();
+  final TextEditingController _fbeg = TextEditingController();
+  final TextEditingController _fend = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -108,13 +116,14 @@ class _VisitorState extends State<Visitor> {
                                   SizedBox(
                                     width: 230,
                                     child: TextField(
+                                      controller: _placpr,
                                       decoration: InputDecoration(
                                           labelText: 'Placa Principal',
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                           ),
-                                          enabled: false,
+                                          enabled: true,
                                           filled: true,
                                           fillColor: Colors.white),
                                     ),
@@ -150,13 +159,14 @@ class _VisitorState extends State<Visitor> {
                                   SizedBox(
                                     width: 230,
                                     child: TextField(
+                                      controller: _placa,
                                       decoration: InputDecoration(
                                           labelText: 'Placa Invitado',
                                           border: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
                                           ),
-                                          enabled: false,
+                                          enabled: true,
                                           filled: true,
                                           fillColor: Colors.white),
                                     ),
@@ -166,6 +176,7 @@ class _VisitorState extends State<Visitor> {
                                   height: 10,
                                 ),
                                 TextField(
+                                  controller: _name,
                                   decoration: InputDecoration(
                                       labelText: 'Nombre del visitante',
                                       border: OutlineInputBorder(
@@ -180,6 +191,7 @@ class _VisitorState extends State<Visitor> {
                                   height: 10,
                                 ),
                                 TextField(
+                                  controller: _id,
                                   decoration: InputDecoration(
                                       labelText: 'Documento de identidad',
                                       border: OutlineInputBorder(
@@ -242,7 +254,7 @@ class _VisitorState extends State<Visitor> {
                     right: 40,
                     child: IconButton(
                       icon: const Icon(Icons.camera_alt_outlined,
-                          color: Color(0xffdd45f5), size: 30.0),
+                          color: Colors.green, size: 30.0),
                       onPressed: () async {
                         String propietario = _idP.text;
                         String placa = _placa.text;
@@ -252,8 +264,6 @@ class _VisitorState extends State<Visitor> {
                           saldo: '0',
                           estado: '0',
                           id: propietario,
-                          idpropietario: '',
-                          namePropietario: '',
                           placaAutor: AutopModel(
                             document: idVisitante,
                             idautorizado: placa,
@@ -291,7 +301,7 @@ class _VisitorState extends State<Visitor> {
           )),
         ),
         bottomNavigationBar: SizedBox(
-          height: 60.0,
+          height: responsive.height * 0.09,
           child: ClipRRect(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(
@@ -300,23 +310,34 @@ class _VisitorState extends State<Visitor> {
                     20.0), // Redondea los bordes superiores derechos
               ),
               child: BottomAppBar(
-                color: const Color(0xffdd45f5),
+                color: Colors.green,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       IconButton(
-                          icon: const Icon(Icons.edit,
+                          icon: const Icon(Icons.home_filled,
                               color: Colors.white, size: 30.0),
                           tooltip: 'Editar',
-                          onPressed: () {}),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const HomeUser()));
+                          }),
                       IconButton(
                           icon: const Icon(Icons.directions_car,
                               color: Colors.white, size: 30.0),
-                          onPressed: () {}),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const Pconfi(
+                                      text: '',
+                                    )));
+                          }),
                       IconButton(
                           icon: const Icon(Icons.credit_card,
                               color: Colors.white, size: 30.0),
-                          onPressed: () {}),
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const paymentpage()));
+                          }),
                     ]),
               )),
         ),

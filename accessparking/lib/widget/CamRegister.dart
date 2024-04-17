@@ -109,7 +109,6 @@ class _CamRegisterState extends State<CamRegister> with WidgetsBindingObserver {
   }
 
   void startCamera() {
-    // ignore: unnecessary_null_comparison
     if (CameraController != null) {
       _selectedCamera(_cameraController!.description);
     }

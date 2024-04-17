@@ -19,10 +19,7 @@ String dropdownValue = list.first;
 class Register extends StatefulWidget {
   const Register({super.key, required this.textv});
   final String textv;
-
   static const String nombre = 'Regi';
-
-  @override
   State<Register> createState() => _RegisterState();
 }
 
@@ -37,11 +34,10 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
   final TextEditingController _torre = TextEditingController();
   final TextEditingController _apto = TextEditingController();
 
-  get textv => null;
-
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
+    var textv;
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(
@@ -91,13 +87,13 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             SizedBox(
                               width: 230,
                               child: TextField(
-                                controller: TextEditingController(text: textv),
+                                controller: _placa,
                                 decoration: InputDecoration(
                                     labelText: 'Placa',
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
-                                    enabled: false,
+                                    enabled: true,
                                     filled: true,
                                     fillColor: Colors.white),
                               ),
@@ -107,6 +103,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
+                            controller: _id,
                             decoration: InputDecoration(
                                 labelText: 'Documento de identidad',
                                 border: OutlineInputBorder(
@@ -120,6 +117,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
+                            controller: _name,
                             decoration: InputDecoration(
                                 labelText: 'Nombre del responsable',
                                 border: OutlineInputBorder(
@@ -133,6 +131,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
+                            controller: _cel,
                             decoration: InputDecoration(
                                 labelText: 'Celular',
                                 border: OutlineInputBorder(
@@ -146,6 +145,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
+                            controller: _mail,
                             decoration: InputDecoration(
                                 labelText: 'Mail',
                                 border: OutlineInputBorder(
@@ -173,6 +173,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                                 // This is called when the user selects an item.
                                 setState(() {
                                   dropdownValue = value!;
+                                  _torre.text = dropdownValue;
                                 });
                               },
                               items: list.map<DropdownMenuItem<String>>(
@@ -188,6 +189,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
+                            controller: _apto,
                             decoration: InputDecoration(
                                 labelText: 'Apartamento',
                                 border: OutlineInputBorder(
@@ -210,6 +212,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                       String cel = _cel.text;
                       String torre = _torre.text;
                       PropModel propModel = PropModel(
+                        placa: placa,
                         apto: apto,
                         id: idPropietario,
                         mail: email,
