@@ -204,6 +204,8 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                   ElevatedButton(
                     child: const Text('Registrar'),
                     onPressed: () {
+                      // Limpiar todos los TextField
+                      
                       String placa = _placa.text;
                       String idPropietario = _id.text;
                       String nombreResponsable = _name.text;
@@ -211,16 +213,24 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                       String apto = _apto.text;
                       String cel = _cel.text;
                       String torre = _torre.text;
+
                       PropModel propModel = PropModel(
-                          placa: placa,
-                          apto: apto,
-                          id: idPropietario,
-                          mail: email,
-                          name: nombreResponsable,
-                          telefono: cel,
-                          torre: torre,
-                          saldop: "10000",
-                          fechapago: "2024-12-31");
+                        placa: placa,
+                        apto: apto,
+                        id: idPropietario,
+                        mail: email,
+                        name: nombreResponsable,
+                        telefono: cel,
+                        torre: torre,
+                        saldop: '',
+                        fechapago: '',
+                      );
+                      _placa.clear();
+                      _id.clear();
+                      _name.clear();
+                      _cel.clear();
+                      _mail.clear();
+                      _apto.clear();
 
                       propProvider.crearprop(propModel).then((success) {
                         if (success) {
