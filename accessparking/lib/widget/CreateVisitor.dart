@@ -265,7 +265,6 @@ class _VisitorState extends State<Visitor> {
                           color: Colors.green, size: 30.0),
                       onPressed: () async {
                         String propietario = controlador._idP.text;
-                        String placpr = controlador._placpr as String;
                         String idVisitante = controlador._id.text;
                         String nombreVisitante = controlador._name.text;
                         PlacasModel placasModel = PlacasModel(

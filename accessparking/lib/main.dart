@@ -17,7 +17,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      // nuestra pagina inicial sera el splash de cargando
       initialRoute: "/splash",
+
+      // determinamos todas las paginas con su respectivo nombre para luego llamarlas en otras clases
       getPages: [
         GetPage(name: '/splash', page: ()=> const SplashScreen()),
         GetPage(name: '/home', page: ()=> const Session()),
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/visitor', page: ()=> const Visitor(textv: '',)),
         GetPage(name: '/pconfi', page: ()=> const Pconfi(text: '')),
         GetPage(name: '/register', page: ()=> const Register(textv: '')),
-        
+
       ]
     );
   }

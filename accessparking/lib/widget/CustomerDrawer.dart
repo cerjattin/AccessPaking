@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'CreateVisitor.dart';
-import 'HomeUser.dart';
-import 'Pconfi.dart';
-import 'Register.dart';
-import 'Session.dart';
 import 'package:get/get.dart';
 
 class CustomerDrawer extends StatelessWidget {
@@ -24,7 +19,7 @@ class CustomerDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Registro Visitantes'),
             onTap: () {
-              Get.toNamed('/pconfi');
+              Get.toNamed('/visitor');
             },
           ),
           ListTile(
