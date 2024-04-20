@@ -4,6 +4,7 @@ import 'HomeUser.dart';
 import 'Pconfi.dart';
 import 'Register.dart';
 import 'Session.dart';
+import 'package:get/get.dart';
 
 class CustomerDrawer extends StatelessWidget {
   const CustomerDrawer({super.key});
@@ -17,42 +18,31 @@ class CustomerDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Dashdoard Propietario'),
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const HomeUser()));
+              Get.toNamed('/homeuser');
             },
           ),
           ListTile(
             title: const Text('Registro Visitantes'),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const Visitor(
-                        textv: '',
-                      )));
+              Get.toNamed('/pconfi');
             },
           ),
           ListTile(
             title: const Text('Registro Propietarios'),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const Register(
-                        textv: '',
-                      )));
+             Get.toNamed('/register');
             },
           ),
           ListTile(
             title: const Text('Ingreso de Vehiculo'),
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const Pconfi(
-                        text: '',
-                      )));
+              Get.toNamed('/pconfi');
             },
           ),
           ListTile(
             title: const Text('Cerrar Sesión'),
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const Session()));
+              Get.toNamed('/home');
             },
           )
         ],

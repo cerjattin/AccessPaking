@@ -11,6 +11,7 @@ import 'package:accessparking/widget/Pconfi.dart';
 import 'package:accessparking/widget/paymentpage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class Visitor extends StatefulWidget {
   const Visitor({super.key, required this.textv});
@@ -19,6 +20,19 @@ class Visitor extends StatefulWidget {
   @override
   State<Visitor> createState() => _VisitorState();
 }
+
+
+// DAMOS USO A LOS CONTROLADORES POR MEDIO DE GETX
+ class MiControladorr extends GetxController{
+  final PlacasProvider placasProvider = PlacasProvider();
+  final AutopProvider autopProvider = AutopProvider();
+  final TextEditingController _placpr = TextEditingController();
+  final TextEditingController _idP = TextEditingController();
+  final TextEditingController _id = TextEditingController();
+  final TextEditingController _name = TextEditingController();
+  final TextEditingController _plaut = TextEditingController();
+  final TextEditingController _namepr = TextEditingController();
+  }
 
 class _VisitorState extends State<Visitor> {
   DateTime _startDate = DateTime.now();
@@ -51,20 +65,12 @@ class _VisitorState extends State<Visitor> {
       });
   }
 
-  final PlacasProvider placasProvider = PlacasProvider();
-  final AutopProvider autopProvider = AutopProvider();
-  final TextEditingController _placpr = TextEditingController();
-  final TextEditingController _idP = TextEditingController();
-  final TextEditingController _id = TextEditingController();
-  final TextEditingController _name = TextEditingController();
-  final TextEditingController _fbeg = TextEditingController();
-  final TextEditingController _fend = TextEditingController();
-  final TextEditingController _plaut = TextEditingController();
-  final TextEditingController _namepr = TextEditingController();
+ 
 
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
+    final controlador = Get.put(MiControladorr());
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -117,7 +123,7 @@ class _VisitorState extends State<Visitor> {
                                   SizedBox(
                                     width: 230,
                                     child: TextField(
-                                      controller: _placpr,
+                                      controller: controlador._placpr,
                                       decoration: InputDecoration(
                                           labelText: 'Placa Principal',
                                           border: OutlineInputBorder(
@@ -134,7 +140,7 @@ class _VisitorState extends State<Visitor> {
                                   height: 10,
                                 ),
                                 TextField(
-                                  controller: _namepr,
+                                  controller: controlador._namepr,
                                   decoration: InputDecoration(
                                       labelText: 'Nombre del responsable',
                                       border: OutlineInputBorder(
@@ -161,7 +167,7 @@ class _VisitorState extends State<Visitor> {
                                   SizedBox(
                                     width: 230,
                                     child: TextField(
-                                      controller: _plaut,
+                                      controller: controlador._plaut,
                                       decoration: InputDecoration(
                                           labelText: 'Placa Invitado',
                                           border: OutlineInputBorder(
@@ -178,7 +184,7 @@ class _VisitorState extends State<Visitor> {
                                   height: 10,
                                 ),
                                 TextField(
-                                  controller: _name,
+                                  controller: controlador._name,
                                   decoration: InputDecoration(
                                       labelText: 'Nombre del visitante',
                                       border: OutlineInputBorder(
@@ -193,7 +199,7 @@ class _VisitorState extends State<Visitor> {
                                   height: 10,
                                 ),
                                 TextField(
-                                  controller: _id,
+                                  controller: controlador._id,
                                   decoration: InputDecoration(
                                       labelText: 'Documento de identidad',
                                       border: OutlineInputBorder(
@@ -258,10 +264,10 @@ class _VisitorState extends State<Visitor> {
                       icon: const Icon(Icons.camera_alt_outlined,
                           color: Colors.green, size: 30.0),
                       onPressed: () async {
-                        String propietario = _idP.text;
-                        String placpr = _placpr as String;
-                        String idVisitante = _id.text;
-                        String nombreVisitante = _name.text;
+                        String propietario = controlador._idP.text;
+                        String placpr = controlador._placpr as String;
+                        String idVisitante = controlador._id.text;
+                        String nombreVisitante = controlador._name.text;
                         PlacasModel placasModel = PlacasModel(
                           saldo: '0',
                           estado: '0',
@@ -272,7 +278,7 @@ class _VisitorState extends State<Visitor> {
                           ),
                         );
 
-                        placasProvider.crearplaca(placasModel).then((success) {
+                        controlador.placasProvider.crearplaca(placasModel).then((success) {
                           if (success) {
                             return 'FUNCIONO';
                             // Operación exitosa

@@ -7,6 +7,7 @@ import 'package:accessparking/widget/Pconfi.dart';
 import 'package:accessparking/widget/paymentpage.dart';
 import 'package:flutter/material.dart';
 import 'CustomerDrawer.dart';
+import 'package:get/get.dart';
 
 const List<String> list = <String>[
   'Seleccione la torre',
@@ -23,9 +24,8 @@ class Register extends StatefulWidget {
   State<Register> createState() => _RegisterState();
 }
 
-class _RegisterState extends State<Register> with WidgetsBindingObserver {
-  bool estado = false;
-  final PropProvider propProvider = PropProvider();
+class MiiControlador extends GetxController{
+ final PropProvider propProvider = PropProvider();
   final TextEditingController _placa = TextEditingController();
   final TextEditingController _id = TextEditingController();
   final TextEditingController _name = TextEditingController();
@@ -33,11 +33,16 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
   final TextEditingController _mail = TextEditingController();
   final TextEditingController _torre = TextEditingController();
   final TextEditingController _apto = TextEditingController();
+}
+
+class _RegisterState extends State<Register> with WidgetsBindingObserver {
+  bool estado = false;
+ 
 
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
-    var textv;
+        final controlador = Get.put(MiiControlador());
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(
@@ -87,7 +92,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             SizedBox(
                               width: 230,
                               child: TextField(
-                                controller: _placa,
+                                controller: controlador._placa,
                                 decoration: InputDecoration(
                                     labelText: 'Placa',
                                     border: OutlineInputBorder(
@@ -103,7 +108,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
-                            controller: _id,
+                            controller: controlador._id,
                             decoration: InputDecoration(
                                 labelText: 'Documento de identidad',
                                 border: OutlineInputBorder(
@@ -117,7 +122,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
-                            controller: _name,
+                            controller: controlador._name,
                             decoration: InputDecoration(
                                 labelText: 'Nombre del responsable',
                                 border: OutlineInputBorder(
@@ -131,7 +136,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
-                            controller: _cel,
+                            controller: controlador._cel,
                             decoration: InputDecoration(
                                 labelText: 'Celular',
                                 border: OutlineInputBorder(
@@ -145,7 +150,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
-                            controller: _mail,
+                            controller: controlador._mail,
                             decoration: InputDecoration(
                                 labelText: 'Mail',
                                 border: OutlineInputBorder(
@@ -173,7 +178,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                                 // This is called when the user selects an item.
                                 setState(() {
                                   dropdownValue = value!;
-                                  _torre.text = dropdownValue;
+                                  controlador._torre.text = dropdownValue;
                                 });
                               },
                               items: list.map<DropdownMenuItem<String>>(
@@ -189,7 +194,7 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                             height: 10,
                           ),
                           TextField(
-                            controller: _apto,
+                            controller: controlador._apto,
                             decoration: InputDecoration(
                                 labelText: 'Apartamento',
                                 border: OutlineInputBorder(
@@ -204,16 +209,17 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                   ElevatedButton(
                     child: const Text('Registrar'),
                     onPressed: () {
-                      // Limpiar todos los TextField
                       
-                      String placa = _placa.text;
-                      String idPropietario = _id.text;
-                      String nombreResponsable = _name.text;
-                      String email = _mail.text;
-                      String apto = _apto.text;
-                      String cel = _cel.text;
-                      String torre = _torre.text;
+                      
+                      String placa = controlador._placa.text;
+                      String idPropietario = controlador._id.text;
+                      String nombreResponsable = controlador._name.text;
+                      String email = controlador._mail.text;
+                      String apto = controlador._apto.text;
+                      String cel = controlador._cel.text;
+                      String torre = controlador._torre.text;
 
+                      // enviar a firebase
                       PropModel propModel = PropModel(
                         placa: placa,
                         apto: apto,
@@ -225,14 +231,16 @@ class _RegisterState extends State<Register> with WidgetsBindingObserver {
                         saldop: '',
                         fechapago: '',
                       );
-                      _placa.clear();
-                      _id.clear();
-                      _name.clear();
-                      _cel.clear();
-                      _mail.clear();
-                      _apto.clear();
 
-                      propProvider.crearprop(propModel).then((success) {
+                      // Limpiar todos los TextField
+                      controlador._placa.clear();
+                      controlador._id.clear();
+                      controlador._name.clear();
+                      controlador._cel.clear();
+                      controlador._mail.clear();
+                      controlador._apto.clear();
+
+                      controlador.propProvider.crearprop(propModel).then((success) {
                         if (success) {
                           return 'FUNCIONO';
                           // Operación exitosa

@@ -4,6 +4,7 @@ import 'package:accessparking/utils/responsive.dart';
 import 'package:accessparking/widget/ConsultAdm.dart';
 import 'package:flutter/material.dart';
 import 'HomeUser.dart';
+import 'package:get/get.dart';
 
 class Session extends StatefulWidget {
   const Session({super.key});
@@ -32,15 +33,21 @@ class AuthService {
   }
 }
 
-class _SessionState extends State<Session> {
+class MiControlador extends GetxController {
   late final TextEditingController _emailController = TextEditingController();
-  late final TextEditingController _passwordController =
-      TextEditingController();
+  late final TextEditingController _passwordController = TextEditingController();
   late bool _acceptTerms = false;
+
+  
+}
+class _SessionState extends State<Session> {
+
+  
 
   @override
   Widget build(BuildContext context) {
     final Responsive responsive = Responsive.of(context);
+    final controlador = Get.put(MiControlador());
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
@@ -81,7 +88,7 @@ class _SessionState extends State<Session> {
                         height: 50,
                         color: Colors.transparent,
                         child: TextField(
-                          controller: _emailController,
+                          controller: controlador._emailController,
                           decoration: InputDecoration(
                               labelText: 'Correo electrónico',
                               border: OutlineInputBorder(
@@ -98,7 +105,7 @@ class _SessionState extends State<Session> {
                         height: 50,
                         color: Colors.transparent,
                         child: TextField(
-                          controller: _passwordController,
+                          controller: controlador._passwordController,
                           decoration: InputDecoration(
                               labelText: 'Contraseña',
                               hintText: 'Contraseña',
@@ -126,10 +133,10 @@ class _SessionState extends State<Session> {
                           title: const Text('Acepto terminos y condiciones',
                               style: TextStyle(color: Colors.white)),
                           controlAffinity: ListTileControlAffinity.leading,
-                          value: _acceptTerms,
+                          value: controlador._acceptTerms,
                           onChanged: (bool? value) {
                             setState(() {
-                              _acceptTerms = value ?? false;
+                              controlador._acceptTerms = value ?? false;
                             });
                           },
                         ),
@@ -140,7 +147,7 @@ class _SessionState extends State<Session> {
                             horizontal: 50, vertical: 20),
                         child: ElevatedButton(
                           onPressed: () {
-                            if (_acceptTerms == true) {
+                            if (controlador._acceptTerms == true) {
                               _login(context);
                             }
                           },
@@ -164,8 +171,9 @@ class _SessionState extends State<Session> {
   }
 
   void _login(BuildContext context) async {
-    String email = _emailController.text;
-    String password = _passwordController.text;
+    final controlador = Get.put(MiControlador());
+    String email = controlador._emailController.text;
+    String password = controlador._passwordController.text;
 
     String? userType = await AuthService().iniciarSesion(email, password);
 
