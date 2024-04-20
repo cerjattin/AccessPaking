@@ -108,10 +108,8 @@ class _CameraAdmonState extends State<CameraAdmon> with WidgetsBindingObserver {
   }
 
   void stopCamera() {
-    if (CameraController != null) {
-      _cameraController!.dispose();
+    _cameraController!.dispose();
     }
-  }
 
   void _initCameraController(List<CameraDescription> cameras) {
     if (_cameraController != null) {
